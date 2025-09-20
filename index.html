@@ -11,7 +11,7 @@ import { SiElasticsearch, SiPostgresql, SiMysql, SiMongodb, SiJenkins, SiPrometh
 
 const DATA = {
   name: "Djalil Salah‑Bey",
-  title: "Data / Analytics Engineer",
+  title: "Ingénieur en science des données",
   location: "Marseille · Paris · Lille",
   email: "mailto:ad.salahbey@gmail.com",
   phone: "tel:+33611279153",
@@ -19,7 +19,7 @@ const DATA = {
   linkedin: "https://www.linkedin.com/in/djalil-salah-bey/",
   cvUrl: "/cv/CV_2025-09-18_Djalil_Salah-bey.pdf",
   blurb:
-    "J'industrialise des pipelines de données et des métriques fiables — du modèle (Kimball/dbt) à l'interface (BI/Streamlit) — avec un focus ClickHouse, Airflow, Azure et observabilité.",
+    "Je conçois des systèmes de données fiables et performants (ingestion → modèles → BI/ML). Curieux, rigoureux et orienté impact, j’aime transformer la donnée en décisions utiles.",
 };
 
 // ————————————————————————————————————————————
@@ -80,114 +80,162 @@ function ImgWithFallback({ src, alt }) {
 // Projects / Skills — data
 // ————————————————————————————————————————————
 
+// Brand palettes for beautiful dynamic covers
+const BRAND_THEME = {
+  clickhouse: { bg: "from-yellow-200 via-amber-300 to-amber-600", tint: "bg-amber-500/20", ring: "ring-amber-400/30" },
+  dbt:        { bg: "from-orange-200 via-orange-300 to-orange-600", tint: "bg-orange-500/20", ring: "ring-orange-400/30" },
+  talend:     { bg: "from-indigo-200 via-indigo-300 to-indigo-600", tint: "bg-indigo-500/20", ring: "ring-indigo-400/30" },
+  spark:      { bg: "from-amber-100 via-orange-200 to-orange-500", tint: "bg-orange-500/20", ring: "ring-orange-400/30" },
+  databricks: { bg: "from-rose-100 via-rose-200 to-rose-600", tint: "bg-rose-500/20", ring: "ring-rose-400/30" },
+  flask:      { bg: "from-emerald-100 via-emerald-200 to-emerald-600", tint: "bg-emerald-500/20", ring: "ring-emerald-400/30" },
+  n8n:        { bg: "from-pink-100 via-pink-200 to-pink-600", tint: "bg-pink-500/20", ring: "ring-pink-400/30" },
+  kafka:      { bg: "from-zinc-100 via-zinc-200 to-zinc-700", tint: "bg-zinc-500/20", ring: "ring-zinc-400/30" },
+  cloud:      { bg: "from-sky-100 via-sky-200 to-sky-600", tint: "bg-sky-500/20", ring: "ring-sky-400/30" },
+  fraud:      { bg: "from-violet-100 via-fuchsia-200 to-fuchsia-600", tint: "bg-fuchsia-500/20", ring: "ring-fuchsia-400/30" },
+  keras:      { bg: "from-red-100 via-red-200 to-red-600", tint: "bg-red-500/20", ring: "ring-red-400/30" },
+  generic:    { bg: "from-zinc-100 via-zinc-200 to-zinc-500", tint: "bg-zinc-500/10", ring: "ring-zinc-400/20" },
+};
+
+const TAG_ICON_MAP = {
+  airflow: <SiApacheairflow className="h-4 w-4" />, docker: <SiDocker className="h-4 w-4" />, kubernetes: <SiKubernetes className="h-4 w-4" />, grafana: <SiGrafana className="h-4 w-4" />, prometheus: <SiPrometheus className="h-4 w-4" />, kafka: <SiApachekafka className="h-4 w-4" />, spark: <SiApachespark className="h-4 w-4" />, "delta lake": <FaDatabase className="h-4 w-4" />, dbt: <FaCogs className="h-4 w-4" />, clickhouse: <FaDatabase className="h-4 w-4" />, flask: <SiFlask className="h-4 w-4" />, terraform: <FaServer className="h-4 w-4" />, python: <FaPython className="h-4 w-4" />, sql: <FaDatabase className="h-4 w-4" />, bi: <FaDatabase className="h-4 w-4" />
+};
+
+function ProjectPoster({ brand, tags, image }){
+  const key = (brand || "generic").toLowerCase();
+  const theme = BRAND_THEME[key] || BRAND_THEME.generic;
+  if (image) return <ImgWithFallback src={image} alt={brand || "project"} />;
+  const topTags = (tags || []).slice(0, 5);
+  return (
+    <div className={`relative h-44 md:h-48 bg-gradient-to-br ${theme.bg} rounded-xl ring-1 ${theme.ring} overflow-hidden`}>
+      <div className="absolute inset-0 opacity-20" style={{backgroundImage:
+        "radial-gradient(circle at 20% 0%, rgba(255,255,255,.6) 0, transparent 40%), radial-gradient(circle at 80% 120%, rgba(255,255,255,.4) 0, transparent 60%)"}} />
+      <div className="absolute top-3 left-3 inline-flex items-center gap-2">
+        <div className={`inline-flex items-center justify-center rounded-full ${theme.tint} backdrop-blur px-2.5 py-1 text-xs font-medium`}>{brand}</div>
+      </div>
+      <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center gap-2">
+        {topTags.map((t, i) => {
+          const k = (t || "").toLowerCase();
+          const icon = TAG_ICON_MAP[k] || TAG_ICON_MAP[k.split(' ')[0]] || null;
+          return (
+            <span key={i} className="inline-flex items-center gap-1 rounded-full bg-white/80 backdrop-blur px-2 py-0.5 text-xs border">
+              {icon}{t}
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+
 const PROJECTS = [
   {
     id: 0,
     brand: "ClickHouse",
-    image: "",
-    title: "Battery Heatmap Migration — OLAP ClickHouse + dbt, Airflow & Streamlit",
+    image: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Clickhouse.png",
+    title: "Heatmaps batterie — ClickHouse & dbt",
     task: "Data Engineer",
     description:
-      "Pipeline analytics de A à Z : ingestion → modèles Kimball (Bronze/Silver/Gold/Mart) → marts → dashboard Streamlit. Orchestration Apache Airflow, contrôles de qualité Great Expectations, monitoring Prometheus/Grafana et IaC Terraform. Objectif : heatmaps REST/CHARGE/DISCHARGE à faible latence sur ClickHouse.",
+      "Entrepôt analytique ClickHouse avec modèles Kimball (dbt) et orchestration Airflow. Heatmaps REST/CHARGE/DISCHARGE à faible latence. Qualité (Great Expectations), monitoring Prometheus/Grafana, IaC Terraform.",
     tags: ["ClickHouse","dbt","Airflow","Great Expectations","Streamlit","Docker","Prometheus","Grafana","Terraform","Python","SQL","BI"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/heatmap_migration" }],
   },
   {
     id: 1,
     brand: "dbt",
-    image: "",
-    title: "dbt_sales — Entrepôt ventes (star) + Airflow, GE, Docker & Terraform",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/79/Star-schema.png",
+    title: "Entrepôt ventes — dbt & Airflow",
     task: "Data Engineer / BI",
     description:
-      "Entrepôt de ventes avec dbt (staging → marts), snapshots SCD, tests de qualité (dbt + Great Expectations) et orchestration Airflow. Execution Docker, provisioning Terraform, documentation/lineage activables, sélecteurs par tags et CI prête à l’emploi.",
+      "Modèle en étoile (staging→marts), snapshots SCD, tests dbt/GE et orchestration Airflow. Docker + Terraform, docs & lineage activables.",
     tags: ["dbt","Airflow","Great Expectations","Docker","Terraform","SQL","BI","Python"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/dbt_sales" }],
   },
   {
     id: 2,
     brand: "Talend",
-    image: "",
-    title: "Projet Talend — ETL industriel (ING/TRF/LDC) avec audit & supervision",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Talend_logo_2021.svg/1024px-Talend_logo_2021.svg.png",
+    title: "ETL industriel — Talend",
     task: "ETL / Data Engineer (Java Talend)",
     description:
-      "Chaîne ETL Java/Talend : ingestion multi-sources, transformations métier (tMap/routines), chargement ODS/Reporting. Contexts dev/recette/prod, joblets d’audit/logging, rejets contrôlés. Planification Airflow/k8s CronJobs, métriques Prometheus, dashboards Grafana et cibles provisionnées via Terraform.",
+      "Ingestion multi‑sources, transformations tMap/routines, chargement ODS/Reporting. Contextes dev/recette/prod, audit/logging et rejets contrôlés. Orchestration Airflow/k8s, métriques Prometheus, dashboards Grafana, Terraform.",
     tags: ["Talend","Java","ETL","PostgreSQL","Airflow","Kubernetes","Prometheus","Grafana","Terraform","SQL"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/Projet_Talend" }],
   },
   {
     id: 3,
     brand: "Spark",
-    image: "",
-    title: "Mini Spark Project — Batch & Streaming (Kafka + Delta Lake) sous Airflow",
+    image: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg",
+    title: "Batch & streaming — Spark, Kafka, Delta",
     task: "Big Data Engineer",
     description:
-      "PySpark batch & streaming : ingestion Kafka, stockage Delta Lake (time-travel/MERGE/OPTIMIZE), orchestration Airflow et tests pytest. Déploiement Docker/Kubernetes, exposition de métriques Prometheus et visualisation Grafana. Focus : scalabilité, latence et fiabilité bout-à-bout.",
+      "PySpark batch & streaming, Delta Lake (time‑travel/MERGE/OPTIMIZE), orchestration Airflow et tests pytest. Déploiement Docker/Kubernetes, monitoring Prometheus/Grafana.",
     tags: ["PySpark","Kafka","Delta Lake","Airflow","pytest","Kubernetes","Docker","Prometheus","Grafana","Python"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/mini_spark_project" }],
   },
   {
     id: 4,
     brand: "Cloud",
-    image: "",
-    title: "Data Engineering BI — Pipeline cloud (bronze/silver/gold) gouverné",
+    image: "https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png",
+    title: "Pipeline BI cloud — bronze/silver/gold",
     task: "Data Engineer / Cloud",
     description:
-      "Cas BI complet sur le cloud : ingestion → bronze/silver/gold → KPIs. Orchestration (Airflow/ADF/Databricks), transformations dbt, tests Great Expectations, alerting, monitoring Grafana/Prometheus et provisioning Terraform. Orientation coût/SLAs et data lineage.",
+      "Ingestion → bronze/silver/gold → KPIs. Orchestration (Airflow/ADF/Databricks), transformations dbt, tests GE, alerting, Prom/Graf et Terraform. Focus coûts/SLAs & lineage.",
     tags: ["Cloud","Airflow","dbt","Great Expectations","Terraform","Grafana","Prometheus","SQL","Python","BI"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/Data_Engineering_BI" }],
   },
   {
     id: 5,
     brand: "Flask",
-    image: "",
-    title: "Flask Docker App — Micro-service data/ML (CI, pytest, k8s, Prom/Graf)",
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg",
+    title: "Microservice data/ML — Flask",
     task: "MLOps / Data Science",
     description:
-      "API Flask conteneurisée (endpoints REST, healthcheck) avec tests pytest et CI/CD. Déploiement Kubernetes, métriques Prometheus et dashboard Grafana. But : exposer une logique data/ML consommable par le SI de manière fiable et observable.",
+      "API REST Flask conteneurisée, tests pytest & CI/CD. Déploiement Kubernetes, métriques Prometheus, dashboard Grafana.",
     tags: ["Flask","pytest","Docker","CI/CD","Kubernetes","Prometheus","Grafana","Python"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/flask_docker_app" }],
   },
   {
     id: 6,
     brand: "Talend",
-    image: "",
-    title: "Projet Talend 2 — Module ETL packagé (JAR) prêt production",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Talend_logo_2021.svg/1024px-Talend_logo_2021.svg.png",
+    title: "Module ETL — Talend (JAR)",
     task: "ETL / Data Engineer (Java Talend)",
     description:
-      "Module Talend exécutable (.jar) avec scripts d’orchestration (.bat/.ps1), log4j2 et mappings XML. Intégration Airflow ou k8s CronJobs, supervision via Prometheus/Grafana et provisioning Terraform pour la base cible. Accent sur la maintenabilité et l’exploitabilité.",
+      "Exécutable .jar + scripts d’orchestration, log4j2 & mappings XML. Intégration Airflow/k8s, supervision Prom/Graf, provisioning Terraform.",
     tags: ["Talend","Java","ETL","Airflow","Kubernetes","Prometheus","Grafana","Terraform","SQL"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/Projet_Talend_2" }],
   },
   {
     id: 7,
     brand: "n8n",
-    image: "",
-    title: "Agent n8n — Orchestration & RAG (LLM) avec Kafka, k8s & Terraform",
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/3b/N8n-logo.png",
+    title: "Agent n8n — Orchestration & RAG",
     task: "NLP Automation & Real-Time APIs",
     description:
-      "Workflows n8n pour ingestion documentaire, embeddings et recherche sémantique. Intégrations Kafka/webhooks, stockage Postgres/objet, déploiement Kubernetes, métriques Prometheus, dashboards Grafana et secrets/ressources gérés par Terraform.",
+      "Workflows n8n pour ingestion documentaire, embeddings & recherche sémantique. Intégrations Kafka/webhooks, Postgres/objet, déploiement k8s, métriques Prom/Graf, secrets Terraform.",
     tags: ["n8n","Kafka","PostgreSQL","Kubernetes","Docker","Prometheus","Grafana","Terraform","Python"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/Agent_n8n" }],
   },
   {
     id: 8,
     brand: "Fraud",
-    image: "",
-    title: "Détection de fraudes bancaires — API Flask + carte interactive",
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/World_map_blank_without_borders.svg/1024px-World_map_blank_without_borders.svg.png",
+    title: "Détection de fraude — API Flask",
     task: "Data Scientist / Data Engineer",
     description:
-      "EDA & features (transactions, géolocalisation), entraînement du modèle (gestion du déséquilibre, ROC-AUC) et service /predict en Flask. Carte monde interactive via /map avec marquage des fraudes. Notebooks fournis (data_prep, EDA_MODELING, fraud_detection). Projet prêt à conteneuriser/monitorer.",
+      "EDA & features, modèle équilibré (ROC‑AUC), endpoint /predict et carte /map pour visualisation. Projet prêt à conteneuriser/monitorer.",
     tags: ["Python","Flask","Docker","SQL","BI"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/detection_fraude_bancaire" }],
   },
   {
     id: 9,
     brand: "Keras",
-    image: "",
-    title: "AI Labs — Text & Image (sklearn GUI + Keras CNN)",
+    image: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Keras_logo.svg",
+    title: "AI Labs — Texte & image",
     task: "AI Engineer / MLOps",
     description:
-      "Deux mini-projets : 1) classification de texte (scikit-learn + TF-IDF) avec CLI & GUI Tkinter (métriques F1/ROC-AUC) ; 2) classification d’images (CNN Keras) sur CIFAR-10 avec accuracy & matrice de confusion. Packaging Docker et tests (pytest) pour une exécution reproductible.",
+      "1) Classification de texte (scikit‑learn + TF‑IDF) avec CLI/GUI ; 2) classification d’images (CNN Keras) sur CIFAR‑10. Docker + tests (pytest).",
     tags: ["Python","Docker"],
     link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/ai-labs-text-and-image" }],
   },
@@ -324,7 +372,7 @@ function TopBanner(){
   return (
     <div className="w-full border-b bg-amber-50/80 text-amber-900">
       <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-2 text-sm flex flex-wrap items-center justify-between gap-3">
-        <div>🟡 À l’écoute d’opportunités — Data/Analytics Engineer (ClickHouse • dbt • Airflow).</div>
+        <div>🟡 À l’écoute d’opportunités — Ingénieur en science des données. Curieux, rigoureux, orienté impact.</div>
         <div className="flex gap-2">
           <a href={DATA.email} className="inline-flex items-center gap-1.5 rounded-full border border-amber-900 px-3 py-1 hover:bg-amber-900 hover:text-white transition"><Mail className="h-4 w-4"/> Email</a>
           <a href={DATA.phone} className="inline-flex items-center gap-1.5 rounded-full border border-amber-900 px-3 py-1 hover:bg-amber-900 hover:text-white transition"><Phone className="h-4 w-4"/> Appeler</a>
@@ -416,7 +464,7 @@ function Projects() {
           <motion.div key={p.id} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
             <Card>
               <div className="mb-4 overflow-hidden rounded-xl border bg-white">
-                {p.image ? <ImgWithFallback src={p.image} alt={p.brand || p.title} /> : <BrandMark brand={p.brand || p.tags?.[0]} />}
+                <ProjectPoster brand={p.brand || p.tags?.[0]} tags={p.tags} image={p.image} />
               </div>
               <div className="flex items-start justify-between gap-3 mb-2">
                 <h3 className="text-lg font-semibold leading-tight">{p.title}</h3>
@@ -610,24 +658,16 @@ function Responsibilities() {
 }
 
 function SeniorSummary() {
-  const highlights = [
-    { k: "Latence p95", v: "< 1 s", note: "sur 40M+ lignes ClickHouse (heatmaps)" },
-    { k: "DAGs Airflow", v: "20+", note: "prod & backfills contrôlés" },
-    { k: "Tests dbt/GE", v: "150+", note: "qualité & documentation" },
-    { k: "SLA pipelines", v: "99,9%", note: "alerting latence & fraicheur" },
-    { k: "Optimisation coût", v: "-30%", note: "indexation/VM & pruning" },
-  ];
   return (
     <Section id="summary" title="Résumé" icon={<Rocket className="h-6 w-6" /> }>
-      <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {highlights.map((h, i) => (
-          <div key={i} className="rounded-2xl border p-4 bg-white/70 dark:bg-zinc-900/60">
-            <div className="text-sm opacity-70">{h.k}</div>
-            <div className="text-2xl font-semibold leading-tight">{h.v}</div>
-            <div className="text-xs opacity-60 mt-1">{h.note}</div>
-          </div>
-        ))}
-      </div>
+      <Card>
+        <p className="text-sm leading-6">
+          Ingénieur en science des données : je construis des pipelines clairs, mesurables et bien documentés pour servir les produits. J’aime apprendre vite, travailler proprement et livrer des résultats concrets.
+        </p>
+        <p className="text-sm text-zinc-600 dark:text-zinc-300 mt-2">
+          Forces : modélisation analytique (Kimball/dbt), orchestration (Airflow), performance (ClickHouse/Spark) et observabilité (Prometheus/Grafana).
+        </p>
+      </Card>
     </Section>
   );
 }
