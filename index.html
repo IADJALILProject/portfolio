@@ -1,0 +1,747 @@
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, Github, Linkedin, Download, ExternalLink, Briefcase, Database, Rocket, Filter, Phone } from "lucide-react";
+import { FaPython, FaDatabase, FaCogs, FaNetworkWired, FaCloud, FaServer, FaDocker, FaAws } from "react-icons/fa";
+import { SiElasticsearch, SiPostgresql, SiMysql, SiMongodb, SiJenkins, SiPrometheus, SiGrafana, SiScikitlearn, SiTensorflow, SiPytorch, SiExpress, SiSocketdotio, SiApacheairflow, SiDocker, SiKubernetes, SiApachespark, SiApachekafka, SiFlask, SiTalend, SiDatabricks, SiKeras } from "react-icons/si";
+
+// ————————————————————————————————————————————
+// Portfolio — Data / Analytics Engineer (Djalil Salah‑Bey)
+// Single-file React component (TailwindCSS + Framer Motion + react-icons)
+// ————————————————————————————————————————————
+
+const DATA = {
+  name: "Djalil Salah‑Bey",
+  title: "Data / Analytics Engineer",
+  location: "Marseille · Paris · Lille",
+  email: "mailto:ad.salahbey@gmail.com",
+  phone: "tel:+33611279153",
+  github: "https://github.com/IADJALILProject",
+  linkedin: "https://www.linkedin.com/in/djalil-salah-bey/",
+  cvUrl: "/cv/CV_2025-09-18_Djalil_Salah-bey.pdf",
+  blurb:
+    "J'industrialise des pipelines de données et des métriques fiables — du modèle (Kimball/dbt) à l'interface (BI/Streamlit) — avec un focus ClickHouse, Airflow, Azure et observabilité.",
+};
+
+// ————————————————————————————————————————————
+// Images / Logos (fallback local + brand icons)
+// ————————————————————————————————————————————
+
+function BrandLogo({ brand }) {
+  const label = (brand || "Data").toUpperCase();
+  return (
+    <svg viewBox="0 0 400 140" className="w-full h-36">
+      <defs>
+        <linearGradient id="g" x1="0" x2="1">
+          <stop offset="0" stopColor="#e5e7eb" />
+          <stop offset="1" stopColor="#f3f4f6" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="140" fill="url(#g)" />
+      <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontFamily="Inter,system-ui" fontSize="28" fill="#111827" letterSpacing="1.5">
+        {label}
+      </text>
+    </svg>
+  );
+}
+
+function BrandMark({ brand }) {
+  const B = (brand || "").toLowerCase();
+  const size = "h-16 w-16";
+  const iconMap = {
+    clickhouse: <FaDatabase className={size} />, // icône générique pour éviter imports risqués
+    dbt: <FaCogs className={size} />,
+    talend: <SiTalend className={size} />,
+    spark: <SiApachespark className={size} />,
+    pyspark: <SiApachespark className={size} />,
+    databricks: <SiDatabricks className={size} />,
+    flask: <SiFlask className={size} />,
+    n8n: <FaNetworkWired className={size} />,
+    kafka: <SiApachekafka className={size} />,
+    fraud: <FaDatabase className={size} />,
+    keras: <SiKeras className={size} />,
+    cloud: <FaCloud className={size} />,
+  };
+  const icon = iconMap[B];
+  if (icon) {
+    return <div className="flex items-center justify-center h-36 bg-white">{icon}</div>;
+  }
+  return <BrandLogo brand={brand} />;
+}
+
+function ImgWithFallback({ src, alt }) {
+  const [ok, setOk] = useState(true);
+  if (!src || !ok) return <BrandMark brand={alt} />;
+  return (
+    <img src={src} alt={alt} className="w-full h-36 object-contain" onError={() => setOk(false)} loading="lazy" decoding="async" />
+  );
+}
+
+// ————————————————————————————————————————————
+// Projects / Skills — data
+// ————————————————————————————————————————————
+
+const PROJECTS = [
+  {
+    id: 0,
+    brand: "ClickHouse",
+    image: "",
+    title: "Battery Heatmap Migration — OLAP ClickHouse + dbt, Airflow & Streamlit",
+    task: "Data Engineer",
+    description:
+      "Pipeline analytics de A à Z : ingestion → modèles Kimball (Bronze/Silver/Gold/Mart) → marts → dashboard Streamlit. Orchestration Apache Airflow, contrôles de qualité Great Expectations, monitoring Prometheus/Grafana et IaC Terraform. Objectif : heatmaps REST/CHARGE/DISCHARGE à faible latence sur ClickHouse.",
+    tags: ["ClickHouse","dbt","Airflow","Great Expectations","Streamlit","Docker","Prometheus","Grafana","Terraform","Python","SQL","BI"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/heatmap_migration" }],
+  },
+  {
+    id: 1,
+    brand: "dbt",
+    image: "",
+    title: "dbt_sales — Entrepôt ventes (star) + Airflow, GE, Docker & Terraform",
+    task: "Data Engineer / BI",
+    description:
+      "Entrepôt de ventes avec dbt (staging → marts), snapshots SCD, tests de qualité (dbt + Great Expectations) et orchestration Airflow. Execution Docker, provisioning Terraform, documentation/lineage activables, sélecteurs par tags et CI prête à l’emploi.",
+    tags: ["dbt","Airflow","Great Expectations","Docker","Terraform","SQL","BI","Python"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/dbt_sales" }],
+  },
+  {
+    id: 2,
+    brand: "Talend",
+    image: "",
+    title: "Projet Talend — ETL industriel (ING/TRF/LDC) avec audit & supervision",
+    task: "ETL / Data Engineer (Java Talend)",
+    description:
+      "Chaîne ETL Java/Talend : ingestion multi-sources, transformations métier (tMap/routines), chargement ODS/Reporting. Contexts dev/recette/prod, joblets d’audit/logging, rejets contrôlés. Planification Airflow/k8s CronJobs, métriques Prometheus, dashboards Grafana et cibles provisionnées via Terraform.",
+    tags: ["Talend","Java","ETL","PostgreSQL","Airflow","Kubernetes","Prometheus","Grafana","Terraform","SQL"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/Projet_Talend" }],
+  },
+  {
+    id: 3,
+    brand: "Spark",
+    image: "",
+    title: "Mini Spark Project — Batch & Streaming (Kafka + Delta Lake) sous Airflow",
+    task: "Big Data Engineer",
+    description:
+      "PySpark batch & streaming : ingestion Kafka, stockage Delta Lake (time-travel/MERGE/OPTIMIZE), orchestration Airflow et tests pytest. Déploiement Docker/Kubernetes, exposition de métriques Prometheus et visualisation Grafana. Focus : scalabilité, latence et fiabilité bout-à-bout.",
+    tags: ["PySpark","Kafka","Delta Lake","Airflow","pytest","Kubernetes","Docker","Prometheus","Grafana","Python"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/mini_spark_project" }],
+  },
+  {
+    id: 4,
+    brand: "Cloud",
+    image: "",
+    title: "Data Engineering BI — Pipeline cloud (bronze/silver/gold) gouverné",
+    task: "Data Engineer / Cloud",
+    description:
+      "Cas BI complet sur le cloud : ingestion → bronze/silver/gold → KPIs. Orchestration (Airflow/ADF/Databricks), transformations dbt, tests Great Expectations, alerting, monitoring Grafana/Prometheus et provisioning Terraform. Orientation coût/SLAs et data lineage.",
+    tags: ["Cloud","Airflow","dbt","Great Expectations","Terraform","Grafana","Prometheus","SQL","Python","BI"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/Data_Engineering_BI" }],
+  },
+  {
+    id: 5,
+    brand: "Flask",
+    image: "",
+    title: "Flask Docker App — Micro-service data/ML (CI, pytest, k8s, Prom/Graf)",
+    task: "MLOps / Data Science",
+    description:
+      "API Flask conteneurisée (endpoints REST, healthcheck) avec tests pytest et CI/CD. Déploiement Kubernetes, métriques Prometheus et dashboard Grafana. But : exposer une logique data/ML consommable par le SI de manière fiable et observable.",
+    tags: ["Flask","pytest","Docker","CI/CD","Kubernetes","Prometheus","Grafana","Python"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/flask_docker_app" }],
+  },
+  {
+    id: 6,
+    brand: "Talend",
+    image: "",
+    title: "Projet Talend 2 — Module ETL packagé (JAR) prêt production",
+    task: "ETL / Data Engineer (Java Talend)",
+    description:
+      "Module Talend exécutable (.jar) avec scripts d’orchestration (.bat/.ps1), log4j2 et mappings XML. Intégration Airflow ou k8s CronJobs, supervision via Prometheus/Grafana et provisioning Terraform pour la base cible. Accent sur la maintenabilité et l’exploitabilité.",
+    tags: ["Talend","Java","ETL","Airflow","Kubernetes","Prometheus","Grafana","Terraform","SQL"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/Projet_Talend_2" }],
+  },
+  {
+    id: 7,
+    brand: "n8n",
+    image: "",
+    title: "Agent n8n — Orchestration & RAG (LLM) avec Kafka, k8s & Terraform",
+    task: "NLP Automation & Real-Time APIs",
+    description:
+      "Workflows n8n pour ingestion documentaire, embeddings et recherche sémantique. Intégrations Kafka/webhooks, stockage Postgres/objet, déploiement Kubernetes, métriques Prometheus, dashboards Grafana et secrets/ressources gérés par Terraform.",
+    tags: ["n8n","Kafka","PostgreSQL","Kubernetes","Docker","Prometheus","Grafana","Terraform","Python"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/Agent_n8n" }],
+  },
+  {
+    id: 8,
+    brand: "Fraud",
+    image: "",
+    title: "Détection de fraudes bancaires — API Flask + carte interactive",
+    task: "Data Scientist / Data Engineer",
+    description:
+      "EDA & features (transactions, géolocalisation), entraînement du modèle (gestion du déséquilibre, ROC-AUC) et service /predict en Flask. Carte monde interactive via /map avec marquage des fraudes. Notebooks fournis (data_prep, EDA_MODELING, fraud_detection). Projet prêt à conteneuriser/monitorer.",
+    tags: ["Python","Flask","Docker","SQL","BI"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/detection_fraude_bancaire" }],
+  },
+  {
+    id: 9,
+    brand: "Keras",
+    image: "",
+    title: "AI Labs — Text & Image (sklearn GUI + Keras CNN)",
+    task: "AI Engineer / MLOps",
+    description:
+      "Deux mini-projets : 1) classification de texte (scikit-learn + TF-IDF) avec CLI & GUI Tkinter (métriques F1/ROC-AUC) ; 2) classification d’images (CNN Keras) sur CIFAR-10 avec accuracy & matrice de confusion. Packaging Docker et tests (pytest) pour une exécution reproductible.",
+    tags: ["Python","Docker"],
+    link: [{ name: "GitHub", url: "https://github.com/IADJALILProject/ai-labs-text-and-image" }],
+  },
+];
+
+const FILTERS = [
+  "All","ClickHouse","dbt","Airflow","Great Expectations","PySpark","Kafka",
+  "Delta Lake","Flask","n8n","Kubernetes","Docker","Terraform","Prometheus",
+  "Grafana","Python","SQL","BI","Talend","Java","Cloud"
+];
+
+const SKILLS = [
+  // ========= Data Engineering =========
+  { name: "Python", icon: <FaPython />, color: "text-yellow-500", category: "Data Engineering", rating: 5 },
+  { name: "SQL", icon: <FaDatabase />, color: "text-blue-500", category: "Data Engineering", rating: 5 },
+  { name: "dbt", icon: <FaCogs />, color: "text-orange-500", category: "Data Engineering", rating: 5 },
+  { name: "Apache Spark", icon: <SiApachespark />, color: "text-orange-400", category: "Data Engineering", rating: 4 },
+  { name: "ClickHouse", icon: <FaDatabase />, color: "text-yellow-500", category: "Data Engineering", rating: 5 },
+  { name: "Delta Lake", icon: <FaDatabase />, color: "text-teal-500", category: "Data Engineering", rating: 4 },
+  { name: "Talend", icon: <SiTalend />, color: "text-indigo-500", category: "Data Engineering", rating: 4 },
+  { name: "n8n", icon: <FaNetworkWired />, color: "text-pink-500", category: "Data Engineering", rating: 4 },
+  { name: "Elasticsearch", icon: <SiElasticsearch />, color: "text-yellow-500", category: "Data Engineering", rating: 3 },
+  { name: "Hadoop (HDFS/Hive)", icon: <FaCogs />, color: "text-gray-600", category: "Data Engineering", rating: 3 },
+
+  // ========= Streaming & Orchestration =========
+  { name: "Apache Airflow", icon: <SiApacheairflow />, color: "text-emerald-600", category: "Streaming & Orchestration", rating: 5 },
+  { name: "Apache Kafka", icon: <SiApachekafka />, color: "text-gray-600", category: "Streaming & Orchestration", rating: 4 },
+  { name: "Spark Structured Streaming", icon: <SiApachespark />, color: "text-orange-500", category: "Streaming & Orchestration", rating: 4 },
+  { name: "Prefect", icon: <FaCloud />, color: "text-blue-500", category: "Streaming & Orchestration", rating: 4 },
+
+  // ========= Databases & Storage =========
+  { name: "PostgreSQL", icon: <SiPostgresql />, color: "text-blue-400", category: "Databases & Storage", rating: 5 },
+  { name: "MySQL", icon: <SiMysql />, color: "text-blue-600", category: "Databases & Storage", rating: 4 },
+  { name: "MongoDB", icon: <SiMongodb />, color: "text-green-400", category: "Databases & Storage", rating: 4 },
+  { name: "Object Storage (S3/ADLS)", icon: <FaCloud />, color: "text-cyan-500", category: "Databases & Storage", rating: 4 },
+
+  // ========= Data Modeling & Architectures =========
+  { name: "Kimball / Star Schema", icon: <FaDatabase />, color: "text-emerald-600", category: "Data Modeling & Architectures", rating: 5 },
+  { name: "Data Vault / Dimensional", icon: <FaDatabase />, color: "text-emerald-500", category: "Data Modeling & Architectures", rating: 3 },
+  { name: "Modern Data Stack", icon: <FaCloud />, color: "text-sky-600", category: "Data Modeling & Architectures", rating: 4 },
+  { name: "Lakehouse Data Stack (Delta/DBX)", icon: <SiDatabricks />, color: "text-red-500", category: "Data Modeling & Architectures", rating: 4 },
+
+  // ========= AI Engineering =========
+  { name: "Scikit-learn", icon: <SiScikitlearn />, color: "text-blue-400", category: "AI Engineering", rating: 4 },
+  { name: "TensorFlow", icon: <SiTensorflow />, color: "text-yellow-500", category: "AI Engineering", rating: 3 },
+  { name: "PyTorch", icon: <SiPytorch />, color: "text-red-500", category: "AI Engineering", rating: 3 },
+
+  // ========= MLOps =========
+  { name: "pytest", icon: <FaCogs />, color: "text-gray-600", category: "MLOps", rating: 4 },
+  { name: "Model Serving (Flask)", icon: <FaServer />, color: "text-gray-700", category: "MLOps", rating: 4 },
+
+  // ========= DevOps =========
+  { name: "Docker", icon: <SiDocker />, color: "text-blue-400", category: "DevOps", rating: 5 },
+  { name: "Kubernetes", icon: <SiKubernetes />, color: "text-blue-500", category: "DevOps", rating: 4 },
+  { name: "CI/CD (Jenkins)", icon: <SiJenkins />, color: "text-blue-600", category: "DevOps", rating: 4 },
+  { name: "CI/CD (GitHub Actions)", icon: <FaServer />, color: "text-gray-600", category: "DevOps", rating: 4 },
+  { name: "Terraform", icon: <FaServer />, color: "text-purple-600", category: "DevOps", rating: 4 },
+  { name: "Prometheus", icon: <SiPrometheus />, color: "text-red-500", category: "DevOps", rating: 4 },
+  { name: "Grafana", icon: <SiGrafana />, color: "text-yellow-500", category: "DevOps", rating: 4 },
+
+  // ========= Cloud =========
+  { name: "AWS", icon: <FaAws />, color: "text-orange-400", category: "Cloud", rating: 4 },
+  { name: "Azure", icon: <FaCloud />, color: "text-blue-400", category: "Cloud", rating: 4 },
+  { name: "Databricks", icon: <FaCloud />, color: "text-gray-500", category: "Cloud", rating: 4 },
+
+  // ========= API =========
+  { name: "REST API", icon: <FaNetworkWired />, color: "text-gray-600", category: "API", rating: 5 },
+  { name: "Express.js", icon: <SiExpress />, color: "text-gray-500", category: "API", rating: 4 },
+  { name: "WebSocket", icon: <SiSocketdotio />, color: "text-gray-500", category: "API", rating: 4 },
+
+  // ========= Analytics (incl. BI) =========
+  { name: "Pandas", icon: <FaPython />, color: "text-yellow-500", category: "Analytics", rating: 5 },
+  { name: "NumPy", icon: <FaPython />, color: "text-yellow-600", category: "Analytics", rating: 4 },
+  { name: "SQL Analytics", icon: <FaDatabase />, color: "text-blue-500", category: "Analytics", rating: 5 },
+  { name: "Power BI", icon: <FaDatabase />, color: "text-yellow-400", category: "Analytics", rating: 4 },
+  { name: "Tableau", icon: <FaDatabase />, color: "text-blue-400", category: "Analytics", rating: 4 },
+
+  // ========= Data Quality & Governance =========
+  { name: "Great Expectations", icon: <FaCogs />, color: "text-purple-500", category: "Data Quality & Governance", rating: 4 },
+  { name: "OpenLineage / DataHub", icon: <FaCogs />, color: "text-indigo-600", category: "Data Quality & Governance", rating: 3 },
+];
+
+// ————————————————————————————————————————————
+// Small UI helpers
+// ————————————————————————————————————————————
+
+function Section({ id, title, icon, children }) {
+  return (
+    <section id={id} className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-14">
+      <div className="flex items-center gap-3 mb-8">
+        {icon}
+        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">{title}</h2>
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function Badge({ children }) {
+  return <span className="inline-flex items-center rounded-full border px-3 py-1 text-sm leading-6 mr-2 mb-2">{children}</span>;
+}
+
+function Card({ children }) {
+  return (
+    <div className="group rounded-2xl border p-6 bg-white/70 dark:bg-zinc-900/60 backdrop-blur transition shadow-sm hover:shadow-md hover:-translate-y-0.5">
+      {children}
+    </div>
+  );
+}
+
+function Header() {
+  return (
+    <header className="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-zinc-900/60 border-b">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="font-semibold tracking-tight">{DATA.name}</div>
+        <nav className="hidden md:flex items-center gap-6 text-sm">
+          <a href="#about" className="hover:opacity-70">À propos</a>
+          <a href="#projects" className="hover:opacity-70">Projets</a>
+          <a href="#skills" className="hover:opacity-70">Compétences</a>
+          <a href="#summary" className="hover:opacity-70">Résumé</a>
+          <a href="#responsibilities" className="hover:opacity-70">Missions</a>
+          <a href="#experience" className="hover:opacity-70">Expériences</a>
+          <a href="#contact" className="hover:opacity-70">Contact</a>
+          <a href={DATA.cvUrl} className="inline-flex items-center gap-2 border rounded-full px-4 py-1.5 hover:bg-black hover:text-white transition">
+            <Download className="h-4 w-4" /> CV
+          </a>
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+function TopBanner(){
+  return (
+    <div className="w-full border-b bg-amber-50/80 text-amber-900">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-2 text-sm flex flex-wrap items-center justify-between gap-3">
+        <div>🟡 À l’écoute d’opportunités — Data/Analytics Engineer (ClickHouse • dbt • Airflow).</div>
+        <div className="flex gap-2">
+          <a href={DATA.email} className="inline-flex items-center gap-1.5 rounded-full border border-amber-900 px-3 py-1 hover:bg-amber-900 hover:text-white transition"><Mail className="h-4 w-4"/> Email</a>
+          <a href={DATA.phone} className="inline-flex items-center gap-1.5 rounded-full border border-amber-900 px-3 py-1 hover:bg-amber-900 hover:text-white transition"><Phone className="h-4 w-4"/> Appeler</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Hero() {
+  return (
+    <div className="relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-zinc-50 to-transparent dark:from-zinc-950" />
+      <section className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-16 md:py-24">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <div className="text-sm inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-4">
+              <Rocket className="h-4 w-4" /> Disponible pour CDI / Mission
+            </div>
+            <h1 className="text-3xl md:text-5xl font-semibold tracking-tight leading-[1.1]">{DATA.title}</h1>
+            <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-300">{DATA.blurb}</p>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a href="#contact" className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:bg-black hover:text-white transition"><Mail className="h-4 w-4" /> Me contacter</a>
+              <a href={DATA.cvUrl} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:bg-black hover:text-white transition"><Download className="h-4 w-4" /> Télécharger le CV</a>
+            </div>
+            <div className="mt-6 flex flex-wrap">
+              {["ClickHouse","dbt","Python","SQL","Streamlit","Power BI","Azure","Airflow","Docker","Git CI/CD"].map((b) => (<Badge key={b}>{b}</Badge>))}
+            </div>
+          </div>
+          <div className="flex md:justify-end">
+            <div className="relative size-40 md:size-56 rounded-full bg-gradient-to-br from-zinc-200 to-zinc-50 dark:from-zinc-800 dark:to-zinc-900 flex items-center justify-center border shadow-inner">
+              <span className="text-4xl md:text-6xl font-semibold select-none">{DATA.name.split(" ").map((w) => w[0]).join("")}</span>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <Section id="about" title="À propos" icon={<Database className="h-6 w-6" /> }>
+      <div className="grid md:grid-cols-3 gap-6">
+        <Card>
+          <p className="text-sm leading-6">Je conçois des modèles analytiques robustes (étoile/Kimball), des pipelines ELT/ETL testés (dbt + CI) et des apps data (Streamlit / web) pour donner des métriques fiables aux équipes produit & métiers.</p>
+        </Card>
+        <Card>
+          <p className="text-sm leading-6">Focus performance & coût : ClickHouse, partitionnement/ORDER BY, agrégations incrémentales, vues matérialisées, et benchmarks systématiques (froid/chaud, multi‑threads).</p>
+        </Card>
+        <Card>
+          <p className="text-sm leading-6">Habitué des environnements Azure & Docker, j'opère de bout en bout : ingestion (Blob/SAS), modélisation (dbt), exposition (APIs/apps/BI), et observabilité (Prometheus/Grafana).</p>
+        </Card>
+      </div>
+    </Section>
+  );
+}
+
+function Projects() {
+  const [selected, setSelected] = useState("All");
+  const [q, setQ] = useState("");
+
+  const filtered = useMemo(() => {
+    return PROJECTS.filter(p => {
+      const matchFilter = selected === "All" || p.tags.includes(selected);
+      const matchQuery = q.trim() === "" || (p.title + " " + p.description + " " + p.tags.join(" ")).toLowerCase().includes(q.toLowerCase());
+      return matchFilter && matchQuery;
+    });
+  }, [selected, q]);
+
+  return (
+    <Section id="projects" title="Projets sélectionnés" icon={<Briefcase className="h-6 w-6" /> }>
+      <div className="mb-6 flex flex-col md:flex-row md:items-center gap-3">
+        <div className="flex-1">
+          <div className="relative">
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Rechercher un projet (mots-clés, techno…)" className="w-full rounded-xl border px-4 py-2 pr-10" />
+            <Filter className="absolute right-3 top-2.5 h-5 w-5 opacity-60" />
+          </div>
+        </div>
+        <div className="overflow-x-auto no-scrollbar whitespace-nowrap">
+          {FILTERS.map((f) => (
+            <button key={f} onClick={() => setSelected(f)} className={"inline-flex items-center rounded-full border px-3 py-1 text-sm mr-2 mb-2 " + (selected === f ? "bg-black text-white" : "hover:bg-zinc-100 dark:hover:bg-zinc-800")}>{f}</button>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filtered.map((p) => (
+          <motion.div key={p.id} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
+            <Card>
+              <div className="mb-4 overflow-hidden rounded-xl border bg-white">
+                {p.image ? <ImgWithFallback src={p.image} alt={p.brand || p.title} /> : <BrandMark brand={p.brand || p.tags?.[0]} />}
+              </div>
+              <div className="flex items-start justify-between gap-3 mb-2">
+                <h3 className="text-lg font-semibold leading-tight">{p.title}</h3>
+                <span className="text-xs opacity-60 whitespace-nowrap">{p.task}</span>
+              </div>
+              <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-6 mb-4">{p.description}</p>
+              <div className="mb-4">{p.tags.map((t) => (<Badge key={t}>{t}</Badge>))}</div>
+              <div className="flex flex-wrap items-center gap-3 text-sm">
+                {p.link?.map((l, i) => (
+                  <a key={i} href={l.url} className="inline-flex items-center gap-1 hover:underline">{l.name === "GitHub" ? <Github className="h-4 w-4" /> : <ExternalLink className="h-4 w-4" />} {l.name}</a>
+                ))}
+              </div>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function SkillStars({ rating }) {
+  return (
+    <div className="flex gap-1">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span key={i} className={"inline-block h-2.5 w-6 rounded-full " + (i < rating ? "bg-zinc-900 dark:bg-white" : "bg-zinc-200 dark:bg-zinc-700")}></span>
+      ))}
+    </div>
+  );
+}
+
+function Skills() {
+  const grouped = useMemo(() => {
+    const map = new Map();
+    for (const s of SKILLS) {
+      if (!map.has(s.category)) map.set(s.category, []);
+      map.get(s.category).push(s);
+    }
+    return Array.from(map.entries());
+  }, []);
+
+  return (
+    <Section id="skills" title="Compétences" icon={<Database className="h-6 w-6" /> }>
+      <div className="grid md:grid-cols-2 gap-6">
+        {grouped.map(([cat, skills]) => (
+          <Card key={cat}>
+            <div className="mb-3 font-medium">{cat}</div>
+            <div className="space-y-3">
+              {skills.map((s, idx) => (
+                <div key={idx} className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className={"text-lg " + (s.color || "")}>{s.icon}</span>
+                    <span className="text-sm">{s.name}</span>
+                  </div>
+                  <SkillStars rating={s.rating} />
+                </div>
+              ))}
+            </div>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+const RESPONSIBILITIES = [
+  {
+    title: "Architecture & Modélisation",
+    items: [
+      "Cadrage archi (MDS/Lakehouse, batch/stream).",
+      "Modèles en étoile (Kimball), Data Vault, 3NF → Star.",
+      "Contrats de données & schémas (JSONSchema/dbt).",
+      "Partitionnement/cluster (ORDER BY, Z‑Order).",
+    ],
+  },
+  {
+    title: "Ingestion & Connectivité",
+    items: [
+      "Connecteurs API/JDBC, S3/ADLS, webhooks.",
+      "Batch & temps réel (Kafka), CDC/incrémental.",
+      "Idempotence, retries, backoff, gestion des secrets.",
+      "Normalisation & chiffrement à l'entrée.",
+    ],
+  },
+  {
+    title: "Transformations (dbt/Spark)",
+    items: [
+      "Staging/cleansing, tests & docs dbt.",
+      "Snapshots SCD, modèles incrémentaux.",
+      "Optimisations SQL (fenêtres/CTE), Delta MERGE/OPTIMIZE.",
+      "Marts métier & métriques réutilisables.",
+    ],
+  },
+  {
+    title: "Orchestration & Scheduling",
+    items: [
+      "DAGs Airflow (sensors, SLAs, pools, XCom).",
+      "Déploiement sur k8s/CronJobs, dépendances/ressources.",
+      "Calendriers, priorités & backfills contrôlés.",
+      "Hooks/Operators custom & secrets backends.",
+    ],
+  },
+  {
+    title: "Qualité & Gouvernance",
+    items: [
+      "Great Expectations (suites, checkpoints, coverage).",
+      "Data lineage (OpenLineage/DataHub).",
+      "Data contracts, SLAs/SLOs, data stewardship.",
+      "Gestion des définitions KPI & glossaire.",
+    ],
+  },
+  {
+    title: "Observabilité & Monitoring",
+    items: [
+      "Métriques Prometheus, dashboards Grafana.",
+      "Logs structurés, traceids, corrélation d'incidents.",
+      "Alerting (lag, échecs DAG, dérives qualité).",
+      "Runbooks & auto‑remédiation de base.",
+    ],
+  },
+  {
+    title: "Performance & Coût",
+    items: [
+      "Benchmarks froid/chaud, p95/p99.",
+      "ClickHouse : ORDER BY, indexes, vues matérialisées.",
+      "Dimensionnement clusters, cache & TTL.",
+      "Optimisation stockage/compute & coûts Cloud.",
+    ],
+  },
+  {
+    title: "Sécurité & Conformité",
+    items: [
+      "RBAC, rôles & secrets (Vault/KeyVault).",
+      "Chiffrement at‑rest/in‑transit, masquage PII.",
+      "RGPD/retention policies, purges & anonymisation.",
+      "Revue d'accès & journaux d'audit.",
+    ],
+  },
+  {
+    title: "DevOps & CI/CD",
+    items: [
+      "Docker images, multi‑stages, SBOM.",
+      "CI GitHub Actions (lint, tests, dbt build).",
+      "IaC Terraform (réseaux, DB, monitoring).",
+      "Packages/versioning, releases & canary.",
+    ],
+  },
+  {
+    title: "Cloud & Infra",
+    items: [
+      "Azure (ADLS/Blob, Databricks), AWS (S3).",
+      "Kubernetes, CronJobs, ingress & autoscaling.",
+      "Stockage objet, file systems, quotas.",
+      "Gestion coûts & etiquetage ressources.",
+    ],
+  },
+  {
+    title: "Data Products & Serving",
+    items: [
+      "APIs Flask/Express, endpoints /predict & /metrics.",
+      "Apps Streamlit & intégrations BI (Power BI).",
+      "Caching, pagination, versionnement schémas.",
+      "SLAs d'exposition & contrats de consommation.",
+    ],
+  },
+  {
+    title: "Support, Run & Documentation",
+    items: [
+      "On‑call/astreinte légère, post‑mortems.",
+      "Playbooks, READMEs, ADRs, dbt docs/lineage.",
+      "Formations internes & mentoring juniors.",
+      "Suivi backlog & priorisation avec métiers.",
+    ],
+  },
+];
+
+function Responsibilities() {
+  return (
+    <Section id="responsibilities" title="Missions de Data Engineer" icon={<Briefcase className="h-6 w-6" /> }>
+      <div className="grid md:grid-cols-2 gap-6">
+        {RESPONSIBILITIES.map((r, i) => (
+          <Card key={i}>
+            <div className="font-medium mb-2">{r.title}</div>
+            <ul className="list-disc pl-5 text-sm space-y-1">
+              {r.items.map((it, idx) => (<li key={idx}>{it}</li>))}
+            </ul>
+          </Card>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function SeniorSummary() {
+  const highlights = [
+    { k: "Latence p95", v: "< 1 s", note: "sur 40M+ lignes ClickHouse (heatmaps)" },
+    { k: "DAGs Airflow", v: "20+", note: "prod & backfills contrôlés" },
+    { k: "Tests dbt/GE", v: "150+", note: "qualité & documentation" },
+    { k: "SLA pipelines", v: "99,9%", note: "alerting latence & fraicheur" },
+    { k: "Optimisation coût", v: "-30%", note: "indexation/VM & pruning" },
+  ];
+  return (
+    <Section id="summary" title="Résumé" icon={<Rocket className="h-6 w-6" /> }>
+      <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {highlights.map((h, i) => (
+          <div key={i} className="rounded-2xl border p-4 bg-white/70 dark:bg-zinc-900/60">
+            <div className="text-sm opacity-70">{h.k}</div>
+            <div className="text-2xl font-semibold leading-tight">{h.v}</div>
+            <div className="text-xs opacity-60 mt-1">{h.note}</div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Experience() {
+  const rows = useMemo(() => ([
+    {
+      role: "Data Engineer — R&D",
+      company: "PowerUp Technology",
+      brand: "PowerUp",
+      period: "Avr. 2025 → Aujourd'hui · Paris",
+      details: [
+        "J’ai conçu et migré un entrepôt analytique ClickHouse structuré en étoile. Il alimente des heatmaps REST/CHARGE/DISCHARGE sur plus de 40 millions de lignes, avec une latence p95 inférieure à la seconde grâce au partitionnement, aux ORDER BY, aux vues matérialisées et au binning.",
+        "J’ai orchestré la chaîne de traitement de bout en bout (Azure Blob → dbt avec tests & docs → Airflow) et déployé une observabilité complète (Prometheus + Grafana) pour suivre fraîcheur, latence et volumétrie en temps réel.",
+        "J’ai industrialisé l’exécution via Docker et IaC Terraform (environnements reproductibles), et automatisé des benchmarks froid/chaud pour sécuriser les régressions de performance.",
+        "J’ai formalisé des SLAs et des contrats de données, avec alerting proactif sur dérives de qualité et lag, et produit les runbooks d’exploitation.",
+        "J’ai écrit et maintenu plus de 20 DAGs Airflow (sensors, pools, SLA) avec backfills contrôlés et hooks custom vers Azure et ClickHouse.",
+        "J’ai mis en place plus de 150 tests (dbt + Great Expectations), la documentation et le lineage pour sécuriser les évolutions et faciliter les revues.",
+        "J’ai réduit le coût de calcul d’environ 30 % via des vues matérialisées ciblées, des TTL et le pruning des partitions les moins consultées.",
+      ],
+    },
+    {
+      role: "Data Engineer (alternance)",
+      company: "Koacher · SportTech",
+      brand: "Koacher",
+      period: "Sept. 2022 → Août 2024 · Lyon",
+      details: [
+        "J’ai modélisé le domaine (utilisateurs, séances, paiements) et construit un entrepôt PostgreSQL exposé aux produits via APIs. Les schémas facilitent l’analyse métier et la gouvernance des données.",
+        "J’ai développé des pipelines ETL en Python et des APIs Node/Express pour alimenter le front React et les dashboards internes, avec une attention portée aux tests et à la résilience.",
+        "J’ai défini les métriques d’acquisition, d’activation et de rétention, conteneurisé les services sous Docker et mis en place une CI GitHub Actions pour fiabiliser les mises en production.",
+        "J’ai conçu des schémas en étoile (facts séances/paiements, dimensions clients/coachs) et des vues analytiques adaptées aux besoins produit.",
+        "J’ai mis en place de la traçabilité et des contrôles de qualité (tests unitaires, checks d’anomalies, logs structurés) pour sécuriser les décisions.",
+        "J’ai optimisé les requêtes critiques (indexation, partitionnement temporel) pour accélérer le reporting et la facturation.",
+        "J’ai documenté les usages data et formé l’équipe aux bonnes pratiques SQL analytiques et à la lecture des métriques.",
+      ],
+    },
+    {
+      role: "Data Analyst (stage)",
+      company: "BNP Paribas",
+      brand: "BNP Paribas",
+      period: "Mars 2020 → Juin 2020 · Alger",
+      details: [
+        "J’ai standardisé les procédures d’extraction et renforcé les contrôles de qualité des données à l’aide de requêtes SQL robustes et de gabarits documentés.",
+        "J’ai mis en place des contrôles de complétude et de cohérence sur les extractions sensibles pour réduire les anomalies.",
+        "J’ai harmonisé les nomenclatures et référentiels afin d’unifier les rapports entre équipes et d’améliorer la comparabilité.",
+        "J’ai créé des scripts SQL paramétrables pour accélérer les demandes ad‑hoc récurrentes.",
+        "J’ai rédigé des guides d’exploitation et amélioré la traçabilité des corrections et des rejets.",
+      ],
+    },
+  ]), []);
+
+  return (
+    <Section id="experience" title="Expériences" icon={<Briefcase className="h-6 w-6" /> }>
+      <div className="space-y-6">
+        {rows.map((e, idx) => (
+          <div key={idx} className="relative pl-6">
+            <div className="absolute left-0 top-1.5 size-2 rounded-full bg-zinc-400" />
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-baseline gap-x-3">
+                <h3 className="font-medium">{e.role}</h3>
+                <span className="opacity-70">— {e.company}</span>
+                <span className="text-sm opacity-60">{e.period}</span>
+              </div>
+              <div className="shrink-0 w-24 h-10 border rounded-xl overflow-hidden bg-white">
+                <BrandMark brand={e.brand} />
+              </div>
+            </div>
+            <ul className="mt-2 list-disc pl-5 text-sm space-y-2">
+              {e.details.map((d, i) => (
+                <li key={i}>{d}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+function Contact() {
+  return (
+    <Section id="contact" title="Contact" icon={<Mail className="h-6 w-6" /> }>
+      <Card>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <div className="font-medium mb-1">Travaillons ensemble</div>
+            <p className="text-sm text-zinc-600 dark:text-zinc-300">{DATA.location} — disponible pour postes CDI / missions.</p>
+          </div>
+          <div className="flex items-center gap-3 flex-wrap">
+            <a href={DATA.email} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:bg-black hover:text-white transition"><Mail className="h-4 w-4" /> Email</a>
+            <a href={DATA.phone} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:bg-black hover:text-white transition"><Phone className="h-4 w-4" /> +33 6 11 27 91 53</a>
+            <a href={DATA.github} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:bg-black hover:text-white transition"><Github className="h-4 w-4" /> GitHub</a>
+            <a href={DATA.linkedin} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:bg-black hover:text-white transition"><Linkedin className="h-4 w-4" /> LinkedIn</a>
+          </div>
+        </div>
+      </Card>
+      <div className="mt-6 text-xs opacity-60">© {new Date().getFullYear()} {DATA.name}. Portfolio construit avec React & Tailwind.</div>
+    </Section>
+  );
+}
+
+export default function Portfolio() {
+  return (
+    <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-white">
+      <Header />
+      <TopBanner />
+      <Hero />
+      <About />
+      <Projects />
+      <Skills />
+      <SeniorSummary />
+      <Responsibilities />
+      <Experience />
+      <Contact />
+    </div>
+  );
+}
