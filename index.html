@@ -17,7 +17,7 @@ const DATA = {
   phone: "tel:+33611279153",
   github: "https://github.com/IADJALILProject",
   linkedin: "https://www.linkedin.com/in/djalil-salah-bey/",
-  cvUrl: "sandbox:/mnt/data/CV_2025-09-18_Djalil_Salah-bey.pdf",
+  cvUrl: "/CV_2025-09-18_Djalil_Salah-bey.pdf",
   blurb:
     "Ingénieur en science des données (Data/Analytics). Je conçois et opère des pipelines de bout en bout — ingestion, modèles analytiques, exposition BI/ML — avec un haut niveau de fiabilité, de performance et de gouvernance. Habitué à travailler avec les équipes produit & métiers, je rends les indicateurs actionnables et mesurables.",
 };
@@ -643,7 +643,7 @@ const RESPONSIBILITIES = [
 
 function Responsibilities() {
   return (
-    <Section id="responsibilities" title="Missions de Data Engineer" icon={<Briefcase className="h-6 w-6" /> }>
+    <Section id="responsibilities" title="Missions & Réalisations" icon={<Briefcase className="h-6 w-6" /> }>
       <div className="grid md:grid-cols-2 gap-6">
         {RESPONSIBILITIES.map((r, i) => (
           <Card key={i}>
@@ -681,13 +681,16 @@ function Experience() {
       brand: "PowerUp",
       period: "Avr. 2025 → Aujourd'hui · Paris",
       details: [
-        "J’ai conçu et migré un entrepôt analytique ClickHouse structuré en étoile. Il alimente des heatmaps REST/CHARGE/DISCHARGE sur plus de 40 millions de lignes, avec une latence p95 inférieure à la seconde grâce au partitionnement, aux ORDER BY, aux vues matérialisées et au binning.",
+        "J’ai conçu et migré un entrepôt analytique ClickHouse structuré en étoile. Il alimente des heatmaps REST/CHARGE/DISCHARGE sur plus de 40 millions de lignes, avec une latence p95 inférieure à la seconde grâce au partitionnement, aux ORDER BY, aux vues matérialisées et au binning.",
         "J’ai orchestré la chaîne de traitement de bout en bout (Azure Blob → dbt avec tests & docs → Airflow) et déployé une observabilité complète (Prometheus + Grafana) pour suivre fraîcheur, latence et volumétrie en temps réel.",
         "J’ai industrialisé l’exécution via Docker et IaC Terraform (environnements reproductibles), et automatisé des benchmarks froid/chaud pour sécuriser les régressions de performance.",
         "J’ai formalisé des SLAs et des contrats de données, avec alerting proactif sur dérives de qualité et lag, et produit les runbooks d’exploitation.",
         "J’ai écrit et maintenu plus de 20 DAGs Airflow (sensors, pools, SLA) avec backfills contrôlés et hooks custom vers Azure et ClickHouse.",
         "J’ai mis en place plus de 150 tests (dbt + Great Expectations), la documentation et le lineage pour sécuriser les évolutions et faciliter les revues.",
-        "J’ai réduit le coût de calcul d’environ 30 % via des vues matérialisées ciblées, des TTL et le pruning des partitions les moins consultées.",
+        "J’ai réduit le coût de calcul d’environ 30 % via des vues matérialisées ciblées, des TTL et le pruning des partitions les moins consultées.",
+        "J’ai automatisé le lineage (OpenLineage/DataHub) et normalisé le glossaire KPI afin d’aligner produit, data et BI.",
+        "J’ai sécurisé l’accès aux données (RBAC) et la gestion des secrets (Azure Key Vault) avec journalisation d’audit et traçabilité des accès.",
+        "J’ai instauré une CI/CD pour dbt et Airflow (lint, tests, dbt build, validations sur PR) avec règles d’approbation et versionnement des schémas."
       ],
     },
     {
@@ -703,6 +706,9 @@ function Experience() {
         "J’ai mis en place de la traçabilité et des contrôles de qualité (tests unitaires, checks d’anomalies, logs structurés) pour sécuriser les décisions.",
         "J’ai optimisé les requêtes critiques (indexation, partitionnement temporel) pour accélérer le reporting et la facturation.",
         "J’ai documenté les usages data et formé l’équipe aux bonnes pratiques SQL analytiques et à la lecture des métriques.",
+        "J’ai défini des calendriers d’exécution robustes avec stratégies de retry/backoff et idempotence pour la résilience des pipelines.",
+        "J’ai mis en place un monitoring opérationnel (Prometheus/Grafana) sur pipelines et APIs, avec alertes simples sur erreurs et latences.",
+        "J’ai appliqué des bonnes pratiques de sécurité (gestion de secrets, masquage basique de PII, droits minimaux) et encadré les accès aux données."
       ],
     },
     {
@@ -787,6 +793,9 @@ function Contact() {
             <a href={DATA.phone} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:bg-black hover:text-white transition"><Phone className="h-4 w-4" /> +33 6 11 27 91 53</a>
             <a href={DATA.github} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:bg-black hover:text-white transition"><Github className="h-4 w-4" /> GitHub</a>
             <a href={DATA.linkedin} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:bg-black hover:text-white transition"><Linkedin className="h-4 w-4" /> LinkedIn</a>
+          </div>
+          <div className="mt-3 text-sm">
+            <a href="/CV_2025-09-18_Djalil_Salah-bey.pdf" download>Télécharger le CV</a>
           </div>
         </div>
       </Card>
