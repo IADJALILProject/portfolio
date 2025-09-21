@@ -1,267 +1,29 @@
 <!doctype html>
 <html lang="fr">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Portfolio — Djalil Salah-Bey</title>
-<meta name="description" content="Djalil Salah-Bey — Data Engineer orienté produit. Pipelines fiables, modèles analytiques, BI/ML et observabilité.">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{--fg:#0b0b0f;--muted:#5b6472;--bg:#fff;--line:#eceff2;--card:#fafafa}
-*{box-sizing:border-box}html,body{margin:0}body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--fg);background:var(--bg)}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.85);backdrop-filter:saturate(120%) blur(6px);border-bottom:1px solid var(--line)}
-.hbar{height:64px;display:flex;align-items:center;justify-content:space-between}
-.nav a{color:var(--fg);opacity:.8;margin-left:18px;text-decoration:none;font-size:14px}
-.nav a:hover{opacity:1}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--fg);border-radius:999px;text-decoration:none;color:var(--fg)}
-.btn:hover{background:var(--fg);color:#fff}
-.hero{padding:64px 0 28px}h1{font-size:40px;margin:0 0 8px;line-height:1.1}.sub{color:var(--muted)}
-.section{padding:28px 0 36px}h2{font-size:26px;margin:0 0 16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
-.thumb{aspect-ratio:16/9;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center}
-.thumb img{max-width:100%;max-height:100%;object-fit:contain}
-.card-body{padding:14px}.role{font-size:12px;color:var(--muted)}.desc{font-size:14px;color:#2b2b2b;line-height:1.5;margin:6px 0 10px}
-.tags{display:flex;flex-wrap:wrap;gap:6px}.tag{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:#29313a}
-.exp{margin:10px 0 0;padding-left:18px}.exp li{margin:6px 0;line-height:1.45}
-.badge{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:6px 8px;margin:6px 6px 0 0;font-size:13px;color:#29313a}
-footer{color:var(--muted);font-size:12px;padding:24px 0;border-top:1px solid var(--line)}
-@media (max-width:420px){h1{font-size:30px}}
-</style>
-</head>
-<body>
-<header><div class="wrap hbar">
-  <div><strong>Djalil Salah-Bey</strong></div>
-  <nav class="nav">
-    <a href="#projects">Projets</a>
-    <a href="#experience">Expériences</a>
-    <a href="#education">Formation</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</div></header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1"
+    />
+    <title>Djalil Salah-Bey — Portfolio</title>
 
-<main class="wrap">
-  <section class="hero">
-    <h1>Ingénieur en science des données</h1>
-    <p class="sub">Data Engineer orienté produit : je transforme des flux bruts en indicateurs clairs et en services de données simples à consommer. Mon obsession : des pipelines stables, des coûts maîtrisés et des livrables réellement utilisés.</p>
-    <p class="sub" style="margin-top:8px">Je parle métier et technique, je documente et je mesure. Objectif : des décisions plus rapides et des équipes autonomes sur leurs données.</p>
-    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-      <a class="btn" href="mailto:ad.salahbey@gmail.com">Me contacter</a>
-      <a class="btn" href="/CV_2025-09-18_Djalil_Salah-bey.pdf" download>Télécharger le CV</a>
-      <span class="badge">Réponses &lt; 1 s (40M+ lignes)</span>
-      <span class="badge">20+ DAGs Airflow</span>
-      <span class="badge">150+ tests dbt/GE</span>
-    </div>
-  </section>
+    <!-- SEO -->
+    <meta name="description" content="Data / Analytics Engineer — pipelines fiables, modèles analytiques, BI/ML et observabilité." />
 
-  <section id="projects" class="section">
-    <h2>Projets</h2>
-    <div class="grid">
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Clickhouse.png" alt="ClickHouse"></div>
-        <div class="card-body">
-          <div class="role">Data Engineer</div>
-          <strong>Heatmaps batterie — ClickHouse & dbt</strong>
-          <p class="desc">Entrepôt ClickHouse (modèles Kimball avec dbt) et orchestration Airflow. Heatmaps REST/CHARGE/DISCHARGE à faible latence. Qualité GE, monitoring Prom/Graf, IaC Terraform.</p>
-          <div class="tags"><span class="tag">ClickHouse</span><span class="tag">dbt</span><span class="tag">Airflow</span></div>
-          <a href="https://github.com/IADJALILProject/heatmap_migration">GitHub →</a>
-        </div>
-      </article>
+    <!-- Open Graph / Social preview (optionnels, mets /public/preview.png si tu l'as) -->
+    <meta property="og:title" content="Djalil Salah-Bey — Data / Analytics Engineer" />
+    <meta property="og:description" content="Des données utiles, mesurables et adoptées par les équipes." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/preview.png" />
 
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/7/79/Star-schema.png" alt="dbt"></div>
-        <div class="card-body">
-          <div class="role">Data Engineer / BI</div>
-          <strong>Entrepôt ventes — dbt & Airflow</strong>
-          <p class="desc">Modèle en étoile (staging→marts), snapshots SCD, tests dbt/GE et orchestration Airflow. Docker & Terraform, docs & lineage.</p>
-          <div class="tags"><span class="tag">dbt</span><span class="tag">Airflow</span><span class="tag">Docker</span></div>
-          <a href="https://github.com/IADJALILProject/dbt_sales">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Talend_logo_2021.svg/1024px-Talend_logo_2021.svg.png" alt="Talend"></div>
-        <div class="card-body">
-          <div class="role">ETL / Data Engineer</div>
-          <strong>ETL industriel — Talend</strong>
-          <p class="desc">Ingestion multi-sources, transformations tMap/routines, chargement ODS/Reporting. Contextes dev/recette/prod, audit/logging, rejets contrôlés. Airflow/k8s, Prom/Graf, Terraform.</p>
-          <div class="tags"><span class="tag">Talend</span><span class="tag">Airflow</span><span class="tag">Grafana</span></div>
-          <a href="https://github.com/IADJALILProject/Projet_Talend">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Apache_Spark_logo.svg" alt="Spark"></div>
-        <div class="card-body">
-          <div class="role">Big Data Engineer</div>
-          <strong>Batch & streaming — Spark, Kafka, Delta</strong>
-          <p class="desc">PySpark batch & streaming, Delta Lake (MERGE/OPTIMIZE), orchestration Airflow, tests pytest. Docker/k8s, monitoring Prom/Graf.</p>
-          <div class="tags"><span class="tag">Spark</span><span class="tag">Kafka</span><span class="tag">Delta</span></div>
-          <a href="https://github.com/IADJALILProject/mini_spark_project">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Databricks_Logo.png" alt="Cloud"></div>
-        <div class="card-body">
-          <div class="role">Data Engineer / Cloud</div>
-          <strong>Pipeline BI cloud — bronze/silver/gold</strong>
-          <p class="desc">Ingestion → bronze/silver/gold → KPIs. Orchestration (Airflow/ADF/Databricks), transformations dbt, tests GE, alerting. Prom/Graf, Terraform. Focus coûts/SLAs & lineage.</p>
-          <div class="tags"><span class="tag">dbt</span><span class="tag">Airflow</span><span class="tag">Databricks</span></div>
-          <a href="https://github.com/IADJALILProject/Data_Engineering_BI">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Flask_logo.svg" alt="Flask"></div>
-        <div class="card-body">
-          <div class="role">MLOps / Data Science</div>
-          <strong>Microservice data/ML — Flask</strong>
-          <p class="desc">API REST Flask conteneurisée, tests pytest & CI/CD. Déploiement k8s. Métriques Prometheus, dashboard Grafana.</p>
-          <div class="tags"><span class="tag">Flask</span><span class="tag">Kubernetes</span><span class="tag">Grafana</span></div>
-          <a href="https://github.com/IADJALILProject/flask_docker_app">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Talend_logo_2021.svg/1024px-Talend_logo_2021.svg.png" alt="Talend JAR"></div>
-        <div class="card-body">
-          <div class="role">ETL / Data Engineer</div>
-          <strong>Module ETL — Talend (JAR)</strong>
-          <p class="desc">Exécutable .jar + scripts d’orchestration, log4j2 & mappings XML. Intégration Airflow/k8s, supervision Prom/Graf, Terraform.</p>
-          <div class="tags"><span class="tag">Talend</span><span class="tag">Airflow</span><span class="tag">Terraform</span></div>
-          <a href="https://github.com/IADJALILProject/Projet_Talend_2">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/N8n-logo.png" alt="n8n"></div>
-        <div class="card-body">
-          <div class="role">NLP Automation & APIs</div>
-          <strong>Agent n8n — Orchestration & RAG</strong>
-          <p class="desc">Workflows n8n pour ingestion documentaire, embeddings & recherche sémantique. Kafka/webhooks, Postgres/objet, k8s. Prom/Graf, secrets Terraform.</p>
-          <div class="tags"><span class="tag">n8n</span><span class="tag">Kafka</span><span class="tag">Postgres</span></div>
-          <a href="https://github.com/IADJALILProject/Agent_n8n">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/World_map_blank_without_borders.svg/1024px-World_map_blank_without_borders.svg.png" alt="Fraud map"></div>
-        <div class="card-body">
-          <div class="role">Data Scientist / Data Engineer</div>
-          <strong>Détection de fraude — API Flask</strong>
-          <p class="desc">EDA & features, modèle équilibré (ROC-AUC), endpoint /predict et carte /map pour visualisation. Prêt à conteneuriser/monitorer.</p>
-          <div class="tags"><span class="tag">Flask</span><span class="tag">Python</span><span class="tag">SQL</span></div>
-          <a href="https://github.com/IADJALILProject/detection_fraude_bancaire">GitHub →</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="thumb"><img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Keras_logo.svg" alt="Keras"></div>
-        <div class="card-body">
-          <div class="role">AI Engineer / MLOps</div>
-          <strong>AI Labs — Texte & image</strong>
-          <p class="desc">1) Classification de texte (scikit-learn + TF-IDF) avec CLI/GUI ; 2) classification d’images (CNN Keras) sur CIFAR-10. Docker + tests (pytest).</p>
-          <div class="tags"><span class="tag">Keras</span><span class="tag">scikit-learn</span><span class="tag">Docker</span></div>
-          <a href="https://github.com/IADJALILProject/ai-labs-text-and-image">GitHub →</a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section id="experience" class="section">
-    <h2>Expériences</h2>
-    <div class="grid" style="grid-template-columns:1fr">
-      <article class="card"><div class="card-body">
-        <strong>PowerUp Technology — Data Engineer (R&D)</strong>
-        <ul class="exp">
-          <li>Conception/migration d’un entrepôt ClickHouse en étoile ; heatmaps REST/CHARGE/DISCHARGE sur 40M+ lignes.</li>
-          <li>p95 &lt; 1 s via partitionnement, ORDER BY, vues matérialisées, binning.</li>
-          <li>Chaîne Azure Blob → dbt (tests/docs) → Airflow ; observabilité Prometheus/Grafana.</li>
-          <li>Docker & Terraform ; environnements reproductibles ; benchmarks froid/chaud automatisés.</li>
-          <li>SLAs & contrats de données ; alerting fraîcheur/latence ; runbooks d’exploitation.</li>
-          <li>20+ DAGs Airflow (sensors, pools, SLA) ; backfills contrôlés ; hooks custom.</li>
-          <li>150+ tests (dbt + Great Expectations) ; documentation & lineage.</li>
-          <li>−30 % coûts via vues matérialisées, TTL & pruning.</li>
-          <li>Lineage (OpenLineage/DataHub) et glossaire KPI.</li>
-          <li>CI/CD dbt & Airflow (lint, tests, build, validations PR).</li>
-        </ul>
-      </div></article>
-      <article class="card"><div class="card-body">
-        <strong>Koacher (SportTech) — Data Engineer</strong>
-        <ul class="exp">
-          <li>Modélisation (utilisateurs, séances, paiements) et entrepôt PostgreSQL exposé via APIs.</li>
-          <li>Pipelines ETL Python + APIs Node/Express pour front React & dashboards.</li>
-          <li>Métriques d’acquisition/activation/rétention ; services conteneurisés ; CI GitHub Actions.</li>
-          <li>Schémas en étoile et vues analytiques orientées produit.</li>
-          <li>Qualité : tests unitaires, checks d’anomalies, logs structurés.</li>
-          <li>Optimisations SQL (index, partitionnement) pour reporting/facturation.</li>
-          <li>Documentation & formation aux bonnes pratiques SQL analytiques.</li>
-          <li>Calendriers d’exécution robustes (retry/backoff, idempotence).</li>
-          <li>Monitoring opérationnel (Prom/Graf) et alertes latence/erreurs.</li>
-          <li>Sécurité : gestion de secrets, droits minimaux, masquage basique PII.</li>
-        </ul>
-      </div></article>
-      <article class="card"><div class="card-body">
-        <strong>HSBC — Data Analyst (stage)</strong>
-        <ul class="exp">
-          <li>Automatisation d’extractions et rapports conformité/risque (SQL/Excel) ; réduction de l’effort manuel.</li>
-          <li>Consolidation de sources et fiabilisation des clés de jointure.</li>
-          <li>Tableaux de bord récurrents avec contrôles de fraîcheur & d’exhaustivité.</li>
-          <li>Envoi planifié et archivage sécurisé des livrables.</li>
-          <li>Documentation et transfert de compétences à l’équipe.</li>
-        </ul>
-      </div></article>
-      <article class="card"><div class="card-body">
-        <strong>BNP Paribas — Data Analyst (stage)</strong>
-        <ul class="exp">
-          <li>Standardisation des extractions et contrôles de qualité avec SQL robuste.</li>
-          <li>Contrôles de complétude/cohérence pour réduire les anomalies.</li>
-          <li>Harmonisation des référentiels et nomenclatures.</li>
-          <li>Scripts SQL paramétrables pour demandes ad-hoc.</li>
-          <li>Guides d’exploitation et traçabilité des corrections/rejets.</li>
-        </ul>
-      </div></article>
-    </div>
-  </section>
-
-  <section id="education" class="section">
-    <h2>Formation & Certifications</h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
-      <article class="card"><div class="card-body">
-        <div class="role">Diplômes</div>
-        <ul class="exp">
-          <li>Licence — Banque & Finance</li>
-          <li>Master 1 & 2 — AFI & Système d'information</li>
-          <li>Master 1 & 2 — Data Engineer</li>
-        </ul>
-      </div></article>
-      <article class="card"><div class="card-body">
-        <div class="role">Certifications & plateformes</div>
-        <ul class="exp">
-          <li>Microsoft Azure (cloud)</li>
-          <li>Udemy — formations Data/Engineering</li>
-          <li>Kaggle — notebooks & compétitions</li>
-        </ul>
-      </div></article>
-    </div>
-  </section>
-
-  <section id="contact" class="section">
-    <h2>Contact</h2>
-    <p class="sub">Marseille · Paris · Lille — disponible pour CDI / missions.</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <a class="btn" href="mailto:ad.salahbey@gmail.com">Email</a>
-      <a class="btn" href="tel:+33611279153">Téléphone</a>
-      <a class="btn" href="https://github.com/IADJALILProject" target="_blank" rel="noreferrer">GitHub</a>
-      <a class="btn" href="https://www.linkedin.com/in/djalil-salah-bey/" target="_blank" rel="noreferrer">LinkedIn</a>
-      <a class="btn" href="/CV_2025-09-18_Djalil_Salah-bey.pdf" download>Télécharger le CV</a>
-    </div>
-  </section>
-</main>
-
-<footer class="wrap">© Djalil Salah-Bey</footer>
-</body>
+    <!-- Favicon (mets un fichier dans /public/favicon.ico si tu veux) -->
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Vite va compiler et injecter ton React via ce script -->
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
+
