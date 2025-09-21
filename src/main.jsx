@@ -1,7 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";              
+import Portfolio from "./App.jsx"; 
 
-/* petites retouches utiles */
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <Portfolio />
+  </React.StrictMode>
+);
+
